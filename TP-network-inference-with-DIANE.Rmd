@@ -2,6 +2,10 @@
 title: "Network inference with a Dashboard for the Inference and Analysis of Networks from Expression data (DIANE)"
 author: "O. Cassan & S. Lèbre"
 date: "Formation IRD, 13-14/10/2021"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 ```{r setup, include=FALSE}
@@ -10,13 +14,14 @@ knitr::opts_chunk$set(echo = TRUE, include =TRUE)
 
 
 ## Introduction à DIANE 
+
 **Installation**
 
 Ce TP sera réalisé sous le dashboard DIANE, qui aura été préalablement installé sur vos machines. 
 Rappel des instructions d'installation, dans la console R : 
 
 
-```{r}
+```{r, eval=FALSE}
 install.packages("remotes")
 remotes::install_github("OceaneCsn/DIANE")
 ```
