@@ -156,9 +156,9 @@ a.sourceLine {
 <li><p>Notez que sur les différentes pages disponibles dans DIANE, les logos symbolisant un point d’interrogation vous permettent d’accéder directement à des informations détaillées.</p></li>
 </ol>
 <p><strong>Zoom </strong></p>
-<p>Il est possible de zoomer/dézoomer dans l’application DIANE en utilisant les raccourcis classiques (ctrl/cmd + ou -).</p>
+<p>Il est possible de zoomer/dézoomer dans l’application DIANE en utilisant les raccourcis classiques (<code>ctrl/cmd + ou -</code>).</p>
 <p><strong>Rapports html</strong></p>
-<p>Notez qu’il est possible de générer un rapport html permettant de conserver les résultats à toutes les étapes des analyses proposées dans DIANE. Pour cela, il vous suffit de cliquer sur ‘GENERATE HTML REPORT.’ Nous vous conseillons de télécharger ces rapports à chaque étape, car ils constituent la trace de vos analyses avec DIANE (DIANE ne dispose pas de sauvegarde de session dans le navigateur: si vous actualisez la page de DIANE, vos analyses ne seront pas gardées et il faudra les reprendre dès le début).</p>
+<p>Notez qu’il est possible de générer un rapport html permettant de conserver les résultats à toutes les étapes des analyses proposées dans DIANE. Pour cela, il vous suffit de cliquer sur <code>GENERATE</code>HTML REPORT`’. Nous vous conseillons de télécharger ces rapports à chaque étape, car ils constituent la trace de vos analyses avec DIANE (DIANE ne dispose pas de sauvegarde de session dans le navigateur: si vous actualisez la page de DIANE, vos analyses ne seront pas gardées et il faudra les reprendre dès le début).</p>
 <p><strong>Objectif de ce TP</strong></p>
 <blockquote>
 <p>L’objectif de ce TP est d’inférer un réseau de régulation de gènes (GRN) de la réponse à la chaleur sous stress osmotique, ce qui correspond aux conditions environnementales que les plantes seront susceptibles de rencontrer plus fréquemment dans les circonstances du changement climatique.</p>
@@ -167,73 +167,78 @@ a.sourceLine {
 <div id="data-import" class="section level2">
 <h2>1. Data import</h2>
 <p>Pour bénéficier de la grande majorité des fonctionnalités de DIANE, la seule entrée requise est une matrice d’expression, donnant les niveaux d’expression bruts des gènes pour chaque réplicat biologique associé à chaque condition. On attend un plan d’expérience avec au moins 2 conditions différentes, et plusieurs réplicats pour chacune.</p>
-<p><strong>Jeu de données ‘Demo Arabidopsis Data’ décrivant les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H) chez A. thaliana</strong></p>
+<p><strong>Jeu de données `Demo Arabidopsis Data’ décrivant les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H) chez A. thaliana</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Dans ce TP, nous vous proposons d’utiliser le jeu de données RNA-seq disponible dans DIANE ‘Demo Arabidopsis Data.’ Ces données issues d’une publication récente (Sewelam et al. 2020) décrivent les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H fort Heat) chez la plante <em>Arabidopsis thaliana</em>.</p></li>
+<li><p>Dans ce TP, nous vous proposons d’utiliser le jeu de données RNA-seq disponible dans DIANE `Demo Arabidopsis Data’. Ces données issues d’une publication récente <span class="citation">[1]</span> décrivent les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H fort Heat) chez la plante <em>Arabidopsis thaliana</em>.</p></li>
 <li><p>Cliquer sur set seed et fixer la graine à la valeur 60. Ceci permet de fixer l’aléa et de retrouver les mêmes résultats que ceux que nous présenterons dans ce TP.</p></li>
 <li><p>Une visualisation des données est proposée dans la colonne centrale.</p></li>
 <li><p>Le plan d’expérience est indiqué dans la colonne de droite. Chaque condition est observée 3 fois. En déduire le nombre total de répétitions (noté <span class="math inline">\(n\)</span> dans le cours).</p></li>
 </ol>
-<p><em>Sewelam N, Brilhaus D, Bräutigam A, Alseekh S, Fernie AR, Maurino VG. Molecular plant responses to combined abiotic stresses put a spotlight on unknown and abundant genes. J Exp Bot. 2020.</em></p>
 <p><strong>(Optionnel) Nouveau jeu de données d’expression</strong></p>
-<p><em>Si vous le souhaitez, vous pouvez également au cours de ce TP charger un jeu de données d’expression de votre choix.</em></p>
+<p>Note : Si vous le souhaitez, vous pouvez également au cours de ce TP charger un jeu de données d’expression de votre choix.*</p>
 <p><em>On attend un fichier contenant une matrice d’expression issue d’un pipeline bioinformatique standard appliqué aux fichiers fastq RNA-Seq bruts. Il s’agit généralement d’un contrôle de qualité suivi de l’alignement des reads sur le génome de référence, et la quantification des reads alignés sur les loci d’intérêt.</em></p>
 </div>
 <div id="normalisation" class="section level2">
 <h2>2. Normalisation</h2>
 <ol style="list-style-type: decimal">
-<li>Les données (Sewelam et al. 2020) utilisées dans ce TP sont présentées en Tags par millions et ne nécessitent pas de normalisation.</li>
+<li>Les données <span class="citation">[1]</span> utilisées dans ce TP sont présentées en Tags par millions et ne nécessitent pas de normalisation.</li>
 </ol>
-<p>Sélectionner ‘None’ puis ‘NORMALIZE.’</p>
+<p>Sélectionner <code>None</code> puis <code>NORMALIZE</code>.</p>
 <p>Note : Pour des données de comptages brutes, 3 techniques de normalisation sont proposées :</p>
 <ul>
 <li><p>Deseq2 (median of ratios)</p></li>
 <li><p>EdgeR (TMM)</p></li>
-<li><p>TCC : réalise d’abord une normalisation avec l’une des deux méthodes précédantes, une analyse expression différentielle, retire les gènes différentiellement exprimés, puis calcule des facteurs de normalisation finaux (affranchis d’un potentiel biais lié aux gènes différentiellement exprimés en grand nombre)</p></li>
+<li><p>TCC <span class="citation">[2]</span> : réalise d’abord une normalisation avec l’une des deux méthodes précédantes, une analyse expression différentielle, retire les gènes différentiellement exprimés, puis calcule des facteurs de normalisation finaux (affranchis d’un potentiel biais lié aux gènes différentiellement exprimés en grand nombre)</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Retirer de l’analyse les gènes dont le niveau d’expression trop faible (section ‘Low counts filtering,’ par défaut 10 x 24 conditions, cliquer sur ‘FILTER’).</li>
+<li>Retirer de l’analyse les gènes dont le niveau d’expression trop faible (section `Low counts filtering’, par défaut 10 x 24 conditions, cliquer sur ‘FILTER’).</li>
 </ol>
 </div>
 <div id="exploratory-analysis" class="section level2">
 <h2>3. Exploratory analysis</h2>
 <p><strong>3.1 PCA </strong></p>
 <p>Les méthodes de réduction de la dimensionnalité sont fréquemment employées sur des données d’expression normalisées pour explorer comment les facteurs expérimentaux influencent l’expression des gènes, et pour estimer l’homogénéité des réplicats. Ceci est proposé dans DIANE via une Analyse en Composantes Principales (ACP).</p>
-<ol style="list-style-type: decimal">
-<li><p>Lancer le calcul de l’ACP.</p></li>
-<li><p>Quels sont les principaux effets mis en évidence par les 3 premiers axes ? (stress salin ? stress osmotique ? stress lié à la chaleur ?)</p></li>
-</ol>
+<p>Visualiser l’ACP.</p>
+<blockquote>
+<p>Quels sont les principaux effets mis en évidence par les 3 premiers axes ? (stress salin ? stress osmotique ? stress lié à la chaleur ?)</p>
+</blockquote>
 <p><strong>3.2 Visualize gene expression levels</strong></p>
-<p>En sélectionnant le 2ème onglet ‘Visualize gene expression levels,’ observer les niveaux d’expression observés pour les gènes suivants :</p>
+<p>En sélectionnant le 2ème onglet `Visualize gene expression levels’, observer les niveaux d’expression observés pour les gènes suivants :</p>
 <ul>
 <li><p>AT4G01720.1</p></li>
 <li><p>AT5G46350.1</p></li>
 <li><p>AT2G14247.1</p></li>
 <li><p>AT2G40770.1</p></li>
 </ul>
+<blockquote>
+<p>Comment varie l’expression de ces gènes suivant les différents stress abiotiques?</p>
+</blockquote>
 </div>
 <div id="differential-expression" class="section level2">
 <h2>4. Differential expression</h2>
-<p>L’analyse différentielle dans DIANE est réalisée à travers le framework EdgeR [ref], qui s’appuie sur la modélisation binomiale négative.</p>
+<p>L’analyse différentielle dans DIANE est réalisée à travers le framework EdgeR <span class="citation">[3]</span>, qui s’appuie sur la modélisation binomiale négative.</p>
 <p>Après avoir estimé les dispersions des gènes, des modèles linéaires généralisés (GLM) sont ajustés pour expliquer le log de l’expression moyenne des gènes comme une combinaison linéaire des conditions expérimentales (S, M, H).</p>
 <p>Nous nous intéresserons à l’effet de la chaleur (H) dans des contions de stress osmotique (M)</p>
 <ol style="list-style-type: decimal">
 <li><p>Sélectionner la condition M en référence et la condition MH en perturbation.</p></li>
-<li><p>Deux critères de sélection sont disponibles: Le seuil de la valeur <span class="math inline">\(p\)</span> ajustée (False Discovery Rate) et le <em>Log Fold Change</em> peuvent tous deux être ajustés à la volée. Choisir les valeurs par défaut :</p></li>
+<li><p>Deux critères de sélection sont disponibles: Le seuil de la valeur <span class="math inline">\(p\)</span> ajustée (False Discovery Rate) et le <em>Log Fold Change</em> peuvent tous deux être ajustés à la volée. Choisir les valeurs :</p></li>
 </ol>
 <ul>
 <li>Adjusted p-value = 0.05</li>
 <li>Absolute Log Fold Change = 2.</li>
 </ul>
-<p>La liste de gènes différentiellement exprimés (DEG) apparaît dans le premier onglet ‘Results.’</p>
+<p>La liste de gènes différentiellement exprimés (DEG) apparaît dans le premier onglet <code>Results</code>.</p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Mener 2 autres analyses différentielles de votre choix. Par exemple, M versus SM et M versus SMH.</p></li>
 <li><p>Parcourir les onglets proposés qui permettent de visualiser différents éléments de l’analyse différentielle (MA-Vulcano plot, Heatmap des données d’expression), de mener une analyse d’enrichissement (Gene Ontology) et d’observer les intersections entre les ensembles de gènes différentiellement exprimés lors des différentes analyses différentielles (Diagramme de Venn).</p></li>
 </ol>
+<blockquote>
+<p>Y a-t-il beaucoup de recoupement entre la liste de DEGs issus de la comparaison M-MH et M-SMH?</p>
+</blockquote>
 </div>
 <div id="expression-based-clustering" class="section level2">
 <h2>5. Expression based clustering</h2>
-<p>Afin d’identifier les gènes co-exprimés parmi une liste de DEG, DIANE permet de regrouper les profils d’expression génique à partir de modèles de mélange, estimés par un algorithme d’espérance-maximisation (EM) introduit par [ref Rau et al 2011, 2015]. Pour cela, DIANE utilise l’approche implémentée dans le logiciel Bioconductor <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/coseq/inst/doc/coseq.html">Coseq</a> [ref Rau et al 2018]. Coseq permet notamment 2 fonctionnalités utiles :</p>
+<p>Afin d’identifier les gènes co-exprimés parmi une liste de DEG, DIANE permet de regrouper les profils d’expression génique à partir de modèles de mélange, estimés par un algorithme d’espérance-maximisation (EM) introduit par <span class="citation">[5]</span>. Pour cela, DIANE utilise l’approche implémentée dans le logiciel Bioconductor <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/coseq/inst/doc/coseq.html">Coseq</a> <span class="citation">[6]</span>. Coseq permet notamment 2 fonctionnalités utiles :</p>
 <ul>
 <li><p>Une transformation peut ête appliquée aux valeurs d’expression avant d’adapter des distributions multivariées gaussiennes aux clusters de gènes.</p></li>
 <li><p>Un critère de sélection de modèle pénalisé est ensuite utilisé pour déterminer le meilleur nombre de clusters dans les données.</p></li>
@@ -244,7 +249,7 @@ a.sourceLine {
 </div>
 <div id="gene-regulatory-network" class="section level2">
 <h2>6. Gene Regulatory Network</h2>
-<p>Dans DIANE, le package choisi pour la reconstruction du GRN est GENIE3 [ref], une procédure d’apprentissage automatique qui a été parmi les meilleures méthodes des défis DREAM [ref]. GENIE3 utilise les forêts aléatoires [ref] qui est une méthode d’apprentissage automatique basée sur l’inférence d’un ensemble d’arbres de régression. Cette méthode a l’avantage d’être non paramétrique, et nécessite ainsi très peu d’hypothèses de modélisation ou d’a priori biologique, tout en étant capable de capturer des interactions et des combinatoires d’ordre élevé entre les régulateurs.</p>
+<p>Dans DIANE, le package choisi pour la reconstruction du GRN est GENIE3 <span class="citation">[7]</span>, une procédure d’apprentissage automatique qui a été parmi les meilleures méthodes des défis DREAM <span class="citation">[8]</span>. GENIE3 utilise les forêts aléatoires <span class="citation">[9]</span> qui est une méthode d’apprentissage automatique basée sur l’inférence d’un ensemble d’arbres de régression. Cette méthode a l’avantage d’être non paramétrique, et nécessite ainsi très peu d’hypothèses de modélisation ou d’a priori biologique, tout en étant capable de capturer des interactions et des combinatoires d’ordre élevé entre les régulateurs.</p>
 <p><strong>6.1 Network inference</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Sélectionner les gènes différentiellement exprimés sous un stress lié à la chaleur dans un contexte de stress osmotique (Input genes : M MH) en conservant l’ensemble des conditions.</p></li>
@@ -263,45 +268,67 @@ a.sourceLine {
 <li>L’importance des variables (régulateurs) dans les forêts aléatoires peut être calculée via ces 2 métriques :</li>
 </ol>
 <ul>
-<li>Augmentation de l’erreur moyenne sur une partie des données non utilisée pour l’apprentissage appelée Oout-Of-Bag’ (MSE increase on Out-Of-Bag)</li>
-<li>Réduction de variance après la création du noeud (Node impurity).</li>
+<li>Augmentation de l’erreur moyenne sur une partie des données non utilisée pour l’apprentissage appelée Out-Of-Bag (<code>MSE increase on Out-Of-Bag</code>)</li>
+<li>Réduction de variance après la création du noeud (<code>Node impurity</code>).</li>
 </ul>
-<p>Choisir ‘Node impurity.’</p>
+<p>Choisir <code>Node impurity</code>.</p>
 <ol start="6" style="list-style-type: decimal">
-<li><p>Lancer l’inférence du réseau (‘LAUNCH NETWORK INFERENCE’) et patienter quelques instants.</p></li>
-<li><p>Il s’agit ensuite de choisir le nombre d’arêtes à retenir dans le réseau puis cliquer sur ‘THRESHOLD NETWORK.’ Ce nombre est toujours difficile à fixer. Dans DIANE, on propose de le choisir en fonction de la densité attendue du réseau (0.02 par défaut).</p></li>
+<li><p>Lancer l’inférence du réseau (<code>LAUNCH NETWORK INFERENCE</code>) et patienter quelques instants.</p></li>
+<li><p>Il s’agit ensuite de choisir le nombre d’arêtes à retenir dans le réseau puis cliquer sur <code>THRESHOLD NETWORK</code>. Ce nombre est toujours difficile à fixer. Dans DIANE, on propose de le choisir en fonction de la densité attendue du réseau (0.02 par défaut). Testez avec plusieurs valeurs de densité différentes grâce au slider <code>Network connectivity density</code> suivi d’un click sur <code>THRESHOLD NETWORK</code>, et observez l’influence de ce paramètre sur le réseau. Le nombre d’arêtes sélectionnées dans le réseau apparaît en haut à droite. Sélectionnez au final une densité de 0.03 pour la suite de la séance.</p></li>
 </ol>
-<p>Sélectionner une densité de 0.03. Dans ce TP, nous n’allons pas utiliser la fonctionalité de tests statistiques des arêtes inférées pour des raisons de temps de calcul, mais nous recommandons de l’utiliser pour des résultats d’inférence plus robustes et précis.</p>
+<p><em>Note : Dans ce TP, nous n’allons pas utiliser la fonctionalité de tests statistiques des arêtes inférées pour des raisons de temps de calcul, mais nous recommandons de l’utiliser pour des résultats plus robustes et précis.</em></p>
 <ol start="8" style="list-style-type: decimal">
-<li>Générer un HTML REPORT, l’enregistrer, et ouvrir le fichier html dans un explorateur.</li>
+<li>Générer un <code>HTML REPORT</code>, l’enregistrer, et ouvrir le fichier html dans un explorateur.</li>
 </ol>
+<blockquote>
 <p>Combien de gènes sont considérés dans l’inférence de réseau ?</p>
+</blockquote>
 <p><strong>6.2 Network Analysis</strong></p>
 <ol style="list-style-type: decimal">
-<li>Explorer avec l’option ‘Node Color’ les 2 types d’affichage :</li>
+<li>Explorer avec l’option <code>Node Color</code> les 2 types d’affichage :</li>
 </ol>
 <ul>
-<li><p>‘Gene type’ permet de distinguer les différents types de gènes (régulateurs, groupes de régulateurs, gènes cibles)</p></li>
-<li><p>‘Communities’ permet d’identifier des communautés de gène via l’algorithme de Louvain [ref] qui partitionne un réseau en optimisant la modularité. Il s’agit d’identiifer des groupes de gènes très connectés, c’est à dire ici des gènes partageant les même régulateurs.</p></li>
+<li><p><code>Gene type</code> permet de distinguer les différents types de gènes (régulateurs, groupes de régulateurs, gènes cibles)</p></li>
+<li><p><code>Communities</code> permet d’identifier des communautés de gène via l’algorithme de Louvain <span class="citation">[10]</span> qui partitionne un réseau en optimisant la modularité. Il s’agit d’identiifer des groupes de gènes très connectés, c’est à dire ici des gènes partageant les même régulateurs.</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Une liste de gènes est indiquée dans un tableau. Les gènes sont-ils tous présents dans le réseau inféré ?</p></li>
-<li><p>Dans quel ordre sont classés les gènes dans le tableau ?</p></li>
-<li><p>Vous pouvez choisir de regarder plus particulièrement certains gènes grâce au champs ’Gene ID to focus on&quot; en hait à gauche du réseai, par exemples :</p></li>
+<li>Une liste de gènes est indiquée dans un tableau. &gt;Les gènes sont-ils tous présents dans le réseau inféré ?</li>
 </ol>
+<blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Dans quel ordre sont classés les gènes dans le tableau ?</li>
+</ol>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>En cliquant sur un gène (nœud) du réseau, un pop-up apparaît et donne l’annotation du gène, son profil d’expression, ses régulateurs et ses cibles.</li>
+</ol>
+<p>Vous pouvez choisir de regarder plus particulièrement certains gènes sur la base de leur identifiant grâce au champs <code>Gene ID to focus on</code> en haut à gauche du réseau, par exemples :</p>
 <ul>
-<li><p>Le gène ayant le degré le plus élevé dans le réseau (faire un copier/coller du nom du gène indiqué dans la première colonne du tableau).</p></li>
-<li><p>Les gènes observés dans la question de la section 3.2.</p></li>
+<li><p>Le gène ayant le degré le plus élevé dans le réseau (faire un copier/coller du nom du premier gène indiqué dans la première colonne du tableau).</p></li>
+<li><p>Les gènes observés dans la question de la section 3.2 :</p></li>
+<li><p>mean_AT4G01720-AT5G46350</p></li>
+<li><p>un gène qui contient “osmotic” dans sa description (ils peuvent être identifiés dans le tableau des gènes avec <code>Search</code> en haut à droite).</p></li>
 </ul>
+<blockquote>
 <p>Les gènes observés dans la question de la section 3.2 font-ils tous partie du réseau inféré ?</p>
+</blockquote>
 <ol start="5" style="list-style-type: decimal">
-<li>En cliquant sur ‘DOWNLOAD EDGES AS CSV TABLE,’ télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, …) et visualiser le contenu.</li>
+<li>En cliquant sur <code>DOWNLOAD EDGES AS CSV TABLE</code>, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, …) et visualiser le contenu. Il est également possible d’ouvrir ce fichier dans Cytoscape ou un autre outil de visualisation de réseaux.</li>
 </ol>
+<blockquote>
 <p>Comment ce tableau est-il organisé ?</p>
+</blockquote>
 <ol start="6" style="list-style-type: decimal">
-<li><p>Observer les groupes de régulateurs via le 2ème onglet de résultat. Les regulateurs ont-ils tous une expression très corrélée à l’intérieur d’un groupe ?</p></li>
-<li><p>Les distributions des degrés (indiquées dans le 3ème onglet) vous semblent-elles conformes aux attendus pour un réseau de régulation ?</p></li>
-<li><p>Observer l’expression dans les modules (4ème onglet). Comment interprétez-vous le profil d’expression du module 10 ?</p></li>
+<li>Observer les groupes de régulateurs via le 2ème onglet de résultat. Chaque carré de ce graphe correspond à un régulateur, et chaque couleur donne le regroupement des régulateurs fait en amont de l’inférence sur la base de leur corrélation (valeur mentionnée sur les arêtes).</li>
+</ol>
+<blockquote>
+<p>Les regulateurs ont-ils tous une expression très corrélée à l’intérieur d’un groupe ?</p>
+</blockquote>
+<ol start="7" style="list-style-type: decimal">
+<li><blockquote>
+<p>Les distributions des degrés (indiquées dans le 3ème onglet) vous semblent-elles conformes aux attentes pour un réseau de régulation ?</p>
+</blockquote></li>
+<li><p>Observer l’expression dans les modules (4ème onglet). &gt;Comment interprétez-vous le profil d’expression du module 10 ?</p></li>
 <li><p>Noter que le 5ème onglet permet de mener des analyses d’enrichissement sur le réseau final, au sein des communatés détectées via l’algorithme de Louvain.</p></li>
 </ol>
 </div>
@@ -309,8 +336,40 @@ a.sourceLine {
 <h2>Antisèche</h2>
 <p>L’ensemble des résultats attendus dans ce TP sont présentés dans la publication associée à DIANE : <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-021-07659-2" class="uri">https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-021-07659-2</a></p>
 </div>
-<div id="références" class="section level2">
-<h2>Références</h2>
+<div id="références" class="section level2 unnumbered">
+<h2 class="unnumbered">Références</h2>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-sewelam2020" class="csl-entry">
+1. Sewelam N, Brilhaus D, Bräutigam A, Alseekh S, Fernie AR, Maurino VG. Molecular plant responses to combined abiotic stresses put a spotlight on unknown and abundant genes. Journal of Experimental Botany. 2020.
+</div>
+<div id="ref-tcc" class="csl-entry">
+2. Sun J, Nishiyama T, Shimizu K, Kadota K. <span class="nocase">TCC: An R package for comparing tag count data with robust normalization strategies</span>. BMC Bioinformatics. 2013;14:219. doi:<a href="https://doi.org/10.1186/1471-2105-14-219">10.1186/1471-2105-14-219</a>.
+</div>
+<div id="ref-edgeR" class="csl-entry">
+3. McCarthy DJ, Chen Y, Smyth GK. Differential expression analysis of multifactor RNA-seq experiments with respect to biological variation. Nucleic Acids Research. 2012;40:4288–97.
+</div>
+<div id="ref-rau2011clustering" class="csl-entry">
+4. Rau A, Celeux G, Martin-Magniette M-L, Maugis-Rabusseau C. Clustering high-throughput sequencing data with poisson mixture models. 2011;1–33. <a href="https://hal.inria.fr/hal-01193758/document">https://hal.inria.fr/hal-01193758/document</a>.
+</div>
+<div id="ref-htscluster" class="csl-entry">
+5. Rau A, Maugis-Rabusseau C, Martin-Magniette M-L, Celeux G. Co-expression analysis of high-throughput transcriptome sequencing data with poisson mixture models. Bioinformatics. 2015;31:1420–7.
+</div>
+<div id="ref-coseq" class="csl-entry">
+6. Rau A, Maugis-Rabusseau C. <span class="nocase">Transformation and model choice for RNA-seq co-expression analysis</span>. Briefings in Bioinformatics. 2018;19:425–36.
+</div>
+<div id="ref-genie3" class="csl-entry">
+7. Huynh-Thu VA, Irrthum A, Wehenkel L, Geurts P. <span class="nocase">Inferring Regulatory Networks from Expression Data Using Tree-Based Methods</span>. PLoS ONE. 2010;5:e12776. doi:<a href="https://doi.org/10.1371/journal.pone.0012776">10.1371/journal.pone.0012776</a>.
+</div>
+<div id="ref-dream5" class="csl-entry">
+8. Marbach D, Costello JC, Küffner R, Vega N, Prill RJ, Camacho DM, et al. <span class="nocase">Wisdom of crowds for robust gene network inference the DREAM5 Consortium HHS Public Access</span>. Nat Methods. 2016;9:796–804. doi:<a href="https://doi.org/10.1038/nmeth.2016">10.1038/nmeth.2016</a>.
+</div>
+<div id="ref-breiman2001random" class="csl-entry">
+9. Breiman L. Random forests. Machine learning. 2001;45:5–32.
+</div>
+<div id="ref-louvain" class="csl-entry">
+10. Blondel VD, Guillaume J-L, Lambiotte R, Lefebvre E. <span class="nocase">Fast unfolding of communities in large networks</span>. Journal of Statistical Mechanics: Theory and Experiment. 2008;2008:P10008.
+</div>
+</div>
 </div>
 </section>
 
