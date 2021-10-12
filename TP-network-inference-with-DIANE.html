@@ -158,7 +158,7 @@ a.sourceLine {
 <p><strong>Zoom </strong></p>
 <p>Il est possible de zoomer/dézoomer dans l’application DIANE en utilisant les raccourcis classiques (<code>ctrl/cmd + ou -</code>).</p>
 <p><strong>Rapports html</strong></p>
-<p>Notez qu’il est possible de générer un rapport html permettant de conserver les résultats à toutes les étapes des analyses proposées dans DIANE. Pour cela, il vous suffit de cliquer sur <code>GENERATE</code>HTML REPORT`’. Nous vous conseillons de télécharger ces rapports à chaque étape, car ils constituent la trace de vos analyses avec DIANE (DIANE ne dispose pas de sauvegarde de session dans le navigateur: si vous actualisez la page de DIANE, vos analyses ne seront pas gardées et il faudra les reprendre dès le début).</p>
+<p>Notez qu’il est possible de générer un rapport html permettant de conserver les résultats à toutes les étapes des analyses proposées dans DIANE. Pour cela, il vous suffit de cliquer sur <code>GENERATE HTML REPORT</code>. Nous vous conseillons de télécharger ces rapports à chaque étape, car ils constituent la trace de vos analyses avec DIANE (DIANE ne dispose pas de sauvegarde de session dans le navigateur: si vous actualisez la page de DIANE, vos analyses ne seront pas gardées et il faudra les reprendre dès le début).</p>
 <p><strong>Objectif de ce TP</strong></p>
 <blockquote>
 <p>L’objectif de ce TP est d’inférer un réseau de régulation de gènes (GRN) de la réponse à la chaleur sous stress osmotique, ce qui correspond aux conditions environnementales que les plantes seront susceptibles de rencontrer plus fréquemment dans les circonstances du changement climatique.</p>
@@ -169,14 +169,14 @@ a.sourceLine {
 <p>Pour bénéficier de la grande majorité des fonctionnalités de DIANE, la seule entrée requise est une matrice d’expression, donnant les niveaux d’expression bruts des gènes pour chaque réplicat biologique associé à chaque condition. On attend un plan d’expérience avec au moins 2 conditions différentes, et plusieurs réplicats pour chacune.</p>
 <p><strong>Jeu de données `Demo Arabidopsis Data’ décrivant les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H) chez A. thaliana</strong></p>
 <ol style="list-style-type: decimal">
-<li><p>Dans ce TP, nous vous proposons d’utiliser le jeu de données RNA-seq disponible dans DIANE `Demo Arabidopsis Data’. Ces données issues d’une publication récente <span class="citation">[1]</span> décrivent les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H fort Heat) chez la plante <em>Arabidopsis thaliana</em>.</p></li>
+<li><p>Dans ce TP, nous vous proposons d’utiliser le jeu de données RNA-seq disponible dans DIANE <code>Demo Arabidopsis Data</code>. Ces données issues d’une publication récente <span class="citation">[1]</span> décrivent les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H fort Heat) chez la plante <em>Arabidopsis thaliana</em>.</p></li>
 <li><p>Cliquer sur set seed et fixer la graine à la valeur 60. Ceci permet de fixer l’aléa et de retrouver les mêmes résultats que ceux que nous présenterons dans ce TP.</p></li>
 <li><p>Une visualisation des données est proposée dans la colonne centrale.</p></li>
 <li><p>Le plan d’expérience est indiqué dans la colonne de droite. Chaque condition est observée 3 fois. En déduire le nombre total de répétitions (noté <span class="math inline">\(n\)</span> dans le cours).</p></li>
 </ol>
 <p><strong>(Optionnel) Nouveau jeu de données d’expression</strong></p>
-<p>Note : Si vous le souhaitez, vous pouvez également au cours de ce TP charger un jeu de données d’expression de votre choix.*</p>
-<p><em>On attend un fichier contenant une matrice d’expression issue d’un pipeline bioinformatique standard appliqué aux fichiers fastq RNA-Seq bruts. Il s’agit généralement d’un contrôle de qualité suivi de l’alignement des reads sur le génome de référence, et la quantification des reads alignés sur les loci d’intérêt.</em></p>
+<p>Note : Si vous le souhaitez, vous pouvez également au cours de ce TP charger un jeu de données d’expression de votre choix.</p>
+<p><em>On attend un fichier contenant une matrice d’expression issue d’un pipeline bioinformatique standard appliqué aux fichiers fastq RNA-Seq bruts. Il s’agit généralement d’un contrôle de qualité suivi de l’alignement des reads sur le génome de référence, et la quantification des reads alignés sur les loci d’intérêt. Pour plus d’informations sur le format d’entrée : <a href="https://oceanecsn.github.io/DIANE/articles/DIANE_Input_data.html" class="uri">https://oceanecsn.github.io/DIANE/articles/DIANE_Input_data.html</a>.</em></p>
 </div>
 <div id="normalisation" class="section level2">
 <h2>2. Normalisation</h2>
@@ -186,12 +186,12 @@ a.sourceLine {
 <p>Sélectionner <code>None</code> puis <code>NORMALIZE</code>.</p>
 <p>Note : Pour des données de comptages brutes, 3 techniques de normalisation sont proposées :</p>
 <ul>
-<li><p>Deseq2 (median of ratios)</p></li>
-<li><p>EdgeR (TMM)</p></li>
-<li><p>TCC <span class="citation">[2]</span> : réalise d’abord une normalisation avec l’une des deux méthodes précédantes, une analyse expression différentielle, retire les gènes différentiellement exprimés, puis calcule des facteurs de normalisation finaux (affranchis d’un potentiel biais lié aux gènes différentiellement exprimés en grand nombre)</p></li>
+<li><p><strong>Deseq2</strong> (median of ratios)</p></li>
+<li><p><strong>EdgeR</strong> (TMM)</p></li>
+<li><p><strong>TCC</strong> <span class="citation">[2]</span> : réalise d’abord une normalisation avec l’une des deux méthodes précédantes, une analyse expression différentielle, retire les gènes différentiellement exprimés, puis calcule des facteurs de normalisation finaux (affranchis d’un potentiel biais lié aux gènes différentiellement exprimés en grand nombre)</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Retirer de l’analyse les gènes dont le niveau d’expression trop faible (section `Low counts filtering’, par défaut 10 x 24 conditions, cliquer sur ‘FILTER’).</li>
+<li>Retirer de l’analyse les gènes dont le niveau d’expression trop faible (section <code>Low counts filtering</code>, par défaut 10 x 24 conditions, cliquer sur <code>FILTER</code>).</li>
 </ol>
 </div>
 <div id="exploratory-analysis" class="section level2">
@@ -292,8 +292,11 @@ a.sourceLine {
 <li><p><code>Communities</code> permet d’identifier des communautés de gène via l’algorithme de Louvain <span class="citation">[10]</span> qui partitionne un réseau en optimisant la modularité. Il s’agit d’identiifer des groupes de gènes très connectés, c’est à dire ici des gènes partageant les même régulateurs.</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Une liste de gènes est indiquée dans un tableau. &gt;Les gènes sont-ils tous présents dans le réseau inféré ?</li>
+<li>Une liste de gènes est indiquée dans un tableau.</li>
 </ol>
+<blockquote>
+<p>Les gènes sont-ils tous présents dans le réseau inféré ?</p>
+</blockquote>
 <blockquote>
 <ol start="3" style="list-style-type: decimal">
 <li>Dans quel ordre sont classés les gènes dans le tableau ?</li>
@@ -307,13 +310,13 @@ a.sourceLine {
 <li><p>Le gène ayant le degré le plus élevé dans le réseau (faire un copier/coller du nom du premier gène indiqué dans la première colonne du tableau).</p></li>
 <li><p>Les gènes observés dans la question de la section 3.2 :</p></li>
 <li><p>mean_AT4G01720-AT5G46350</p></li>
-<li><p>un gène qui contient “osmotic” dans sa description (ils peuvent être identifiés dans le tableau des gènes avec <code>Search</code> en haut à droite).</p></li>
+<li><p>un gène qui contient “osmotic” ou “heat” dans sa description (ils peuvent être fitrés dans le tableau des gènes avec l’option <code>Search</code> en haut à droite).</p></li>
 </ul>
 <blockquote>
 <p>Les gènes observés dans la question de la section 3.2 font-ils tous partie du réseau inféré ?</p>
 </blockquote>
 <ol start="5" style="list-style-type: decimal">
-<li>En cliquant sur <code>DOWNLOAD EDGES AS CSV TABLE</code>, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, …) et visualiser le contenu. Il est également possible d’ouvrir ce fichier dans Cytoscape ou un autre outil de visualisation de réseaux.</li>
+<li>En cliquant sur <code>DOWNLOAD EDGES AS CSV TABLE</code>, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, …) et visualiser le contenu.</li>
 </ol>
 <blockquote>
 <p>Comment ce tableau est-il organisé ?</p>

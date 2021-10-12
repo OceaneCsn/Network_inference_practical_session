@@ -57,7 +57,7 @@ Il est possible de zoomer/dézoomer dans l'application DIANE en utilisant les ra
 
 **Rapports html**
 
-Notez qu'il est possible de générer un rapport html permettant de conserver les résultats à toutes les étapes des analyses proposées dans DIANE. Pour cela, il vous suffit de cliquer sur `GENERATE `HTML REPORT`'. 
+Notez qu'il est possible de générer un rapport html permettant de conserver les résultats à toutes les étapes des analyses proposées dans DIANE. Pour cela, il vous suffit de cliquer sur `GENERATE HTML REPORT`. 
 Nous vous conseillons de télécharger ces rapports à chaque étape, car ils constituent la trace de vos analyses avec DIANE (DIANE ne dispose pas de sauvegarde de session dans le navigateur: si vous actualisez la page de DIANE, vos analyses ne seront pas gardées et il faudra les reprendre dès le début).
 
 **Objectif de ce TP**
@@ -72,20 +72,20 @@ Pour bénéficier de la grande majorité des fonctionnalités de DIANE, la seule
 
 **Jeu de données `Demo Arabidopsis Data' décrivant les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H) chez A. thaliana**
 
-1. Dans ce TP, nous vous proposons d'utiliser le jeu de données RNA-seq disponible dans DIANE `Demo Arabidopsis Data'. Ces données issues d'une publication récente [@sewelam2020]  décrivent les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H fort Heat) chez la plante *Arabidopsis thaliana*. 
+1. Dans ce TP, nous vous proposons d'utiliser le jeu de données RNA-seq disponible dans DIANE `Demo Arabidopsis Data`. Ces données issues d'une publication récente [@sewelam2020]  décrivent les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H fort Heat) chez la plante *Arabidopsis thaliana*. 
 
 2. Cliquer sur set seed et fixer la graine à la valeur 60. Ceci permet de fixer l'aléa et de retrouver les mêmes résultats que ceux que nous présenterons dans ce TP.
 
 
-3. Une visualisation des données est proposée dans la colonne centrale. 
+3. Une visualisation en heatmap d'une centaine de gènes des données est proposée dans la colonne centrale comme premier aperçu.
 
 4. Le plan d'expérience est indiqué dans la colonne de droite. Chaque condition est observée 3 fois. En déduire le nombre total de répétitions (noté $n$ dans le cours). 
 
 **(Optionnel) Nouveau jeu de données d'expression**
 
-Note : Si vous le souhaitez, vous pouvez également au cours de ce TP charger un jeu de données d'expression de votre choix.*
+Note : Si vous le souhaitez, vous pouvez également au cours de ce TP charger un jeu de données d'expression de votre choix.
 
-*On attend un fichier contenant une matrice d'expression issue d'un pipeline bioinformatique standard appliqué aux fichiers fastq RNA-Seq bruts. Il s'agit généralement d'un contrôle de qualité suivi de l'alignement des reads sur le génome de référence, et la quantification des reads alignés sur les loci d'intérêt.*
+*On attend un fichier contenant une matrice d'expression issue d'un pipeline bioinformatique standard appliqué aux fichiers fastq RNA-Seq bruts. Il s'agit généralement d'un contrôle de qualité suivi de l'alignement des reads sur le génome de référence, et la quantification des reads alignés sur les loci d'intérêt. Pour plus d'informations sur le format d'entrée : https://oceanecsn.github.io/DIANE/articles/DIANE_Input_data.html.*
 
 
 ## 2. Normalisation 
@@ -97,13 +97,13 @@ Sélectionner `None` puis `NORMALIZE`.
 
 Note : Pour des données de comptages brutes, 3 techniques de normalisation sont proposées : 
 
-+ Deseq2 (median of ratios)
++ **Deseq2** (median of ratios)
 
-+ EdgeR (TMM) 
++ **EdgeR** (TMM) 
 
-+ TCC [@tcc] : réalise d'abord une normalisation avec l'une des deux méthodes précédantes, une analyse expression différentielle, retire les gènes différentiellement exprimés, puis calcule des facteurs de normalisation finaux (affranchis d'un potentiel biais lié aux gènes différentiellement exprimés en grand nombre)
++ **TCC** [@tcc] : réalise d'abord une normalisation avec l'une des deux méthodes précédantes, une analyse expression différentielle, retire les gènes différentiellement exprimés, puis calcule des facteurs de normalisation finaux (affranchis d'un potentiel biais lié aux gènes différentiellement exprimés en grand nombre)
 
-2. Retirer de l'analyse les gènes dont le niveau d'expression trop faible (section `Low counts filtering`, par défaut 10 x 24 conditions, cliquer sur `FILTER`).
+2. Retirer de l'analyse les gènes dont le niveau d'expression trop faible (section `Low counts filtering`, par défaut 10 x 24 conditions, cliquer sur `FILTER`). Observer sur les boxplots les différences de distribution des valeurs d'expression avant et après ce retrait de gènes.
 
 ## 3. Exploratory analysis
 
@@ -183,7 +183,6 @@ est GENIE3 [@genie3], une procédure d'apprentissage automatique qui a été par
 GENIE3 utilise les forêts aléatoires [@breiman2001random] qui est une méthode d'apprentissage automatique basée sur l'inférence d'un ensemble d'arbres de régression. Cette méthode a l'avantage d'être  non paramétrique, et nécessite ainsi très peu d'hypothèses de modélisation ou d'a priori biologique, tout en étant capable de capturer des interactions et des combinatoires d'ordre élevé entre les régulateurs.
 
 
-
 **6.1 Network inference**
 
 1. Sélectionner les gènes différentiellement exprimés sous un stress lié à la chaleur dans un contexte de stress osmotique (Input genes : M MH) en conservant l'ensemble des conditions. 
@@ -225,6 +224,7 @@ Choisir `Node impurity`.
 - `Communities` permet d'identifier des communautés de gène via  l'algorithme de Louvain [@louvain] qui partitionne un réseau en optimisant la modularité. Il s'agit d'identiifer des groupes de gènes très connectés, c'est à dire ici des gènes partageant les même régulateurs. 
 
 2. Une liste de gènes est indiquée dans un tableau. 
+
 >Les gènes sont-ils tous présents dans le réseau inféré ?
 
 >3. Dans quel ordre sont classés les gènes dans le tableau  ?
@@ -240,14 +240,14 @@ Vous pouvez choisir de regarder plus particulièrement certains gènes sur la ba
 
 + mean_AT4G01720-AT5G46350
 
-- un gène qui contient "osmotic" dans sa description (ils peuvent être identifiés dans le tableau des gènes avec `Search` en haut à droite).
+- un gène qui contient "osmotic" ou "heat" dans sa description (ils peuvent être fitrés dans le tableau des gènes avec l'option `Search` en haut à droite).
 
 
 >Les gènes observés dans la question de la section 3.2 font-ils tous partie du réseau inféré ?
 
 
 
-5. En cliquant sur `DOWNLOAD EDGES AS CSV TABLE`, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, ...) et visualiser le contenu. Il est également possible d'ouvrir ce fichier dans Cytoscape ou un autre outil de visualisation de réseaux.
+5. En cliquant sur `DOWNLOAD EDGES AS CSV TABLE`, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, ...) et visualiser le contenu.
 
 >Comment ce tableau est-il organisé ?
 
