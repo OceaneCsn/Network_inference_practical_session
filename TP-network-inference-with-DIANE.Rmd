@@ -207,9 +207,9 @@ Choisir `Node impurity`.
 
 6. Lancer l'inférence du réseau (`LAUNCH NETWORK INFERENCE`) et patienter quelques instants.
 
-7. Il s'agit ensuite de choisir le nombre d'arêtes à retenir dans le réseau puis cliquer sur `THRESHOLD NETWORK`. Ce nombre est toujours difficile à fixer. Dans DIANE, on  propose de le choisir en fonction de la densité attendue du réseau (0.02 par défaut). Testez avec plusieurs valeurs de densité différentes grâce au slider `Network connectivity density` suivi d'un click sur `THRESHOLD NETWORK`, et observez l'influence de ce paramètre sur le réseau. Le nombre d'arêtes sélectionnées dans le réseau apparaît en haut à droite. Sélectionnez au final une densité de 0.03 pour la suite de la séance. 
+7. Il s'agit ensuite de choisir le nombre d'arêtes à retenir dans le réseau puis cliquer sur `THRESHOLD NETWORK`. Ce nombre est toujours difficile à fixer. Dans DIANE, on  propose de le choisir en fonction de la densité attendue du réseau (0.02 par défaut). Testez avec plusieurs valeurs de densité différentes grâce au slider `Network connectivity density` suivi d'un click sur `THRESHOLD NETWORK`, et observez l'influence de ce paramètre sur le réseau. Sélectionnez au final une densité de 0.03 pour la suite de la séance. 
 
-*Note : Dans ce TP, nous n'allons pas utiliser la fonctionalité de tests statistiques des arêtes inférées pour des raisons de temps de calcul, mais nous recommandons de l'utiliser pour des résultats plus robustes et précis.*
+*Note : Dans ce TP, nous n'allons pas utiliser la fonctionalité de tests statistiques des arêtes inférées pour des raisons de temps de calcul, mais nous recommandons de l'utiliser pour des résultats plus robustes et précis en vue de publier ou d'alimenter des interprétations biologiques.*
 
 8. Générer un `HTML REPORT`, l'enregistrer, et ouvrir le fichier html dans un explorateur. 
 
@@ -227,41 +227,43 @@ Choisir `Node impurity`.
 
 >Les gènes sont-ils tous présents dans le réseau inféré ?
 
->3. Dans quel ordre sont classés les gènes dans le tableau  ?
+>Dans quel ordre sont classés les gènes dans le tableau  ?
 
-4. En cliquant sur un gène (nœud) du réseau, un pop-up apparaît et donne l'annotation du gène, son profil d'expression, ses régulateurs et ses cibles.
+3. En cliquant sur un gène (nœud) du réseau, un pop-up apparaît et donne l'annotation du gène, son profil d'expression, ses régulateurs et ses cibles.
 
 
 Vous pouvez choisir de regarder plus particulièrement certains gènes sur la base de leur identifiant grâce au champs `Gene ID to focus on` en haut à gauche du réseau, par exemples : 
 
 - Le gène ayant le degré le plus élevé dans le réseau (faire un copier/coller du nom du premier gène indiqué dans la première colonne du tableau).
 
-- Les gènes observés dans la question de la section 3.2 : 
+- Les gènes observés dans la question de la section 3.2
 
-+ mean_AT4G01720-AT5G46350
+- Le groupe de régulateurs mean_AT4G01720-AT5G46350
 
-- un gène qui contient "osmotic" ou "heat" dans sa description (ils peuvent être fitrés dans le tableau des gènes avec l'option `Search` en haut à droite).
+- Un gène qui contient "osmotic" ou "heat" dans sa description (ils peuvent être fitrés dans le tableau des gènes avec l'option `Search` en haut à droite).
 
 
 >Les gènes observés dans la question de la section 3.2 font-ils tous partie du réseau inféré ?
 
 
 
-5. En cliquant sur `DOWNLOAD EDGES AS CSV TABLE`, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, ...) et visualiser le contenu.
+4. En cliquant sur `DOWNLOAD EDGES AS CSV TABLE`, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, ...) et visualiser le contenu.
 
 >Comment ce tableau est-il organisé ?
 
-6. Observer les groupes de régulateurs via le 2ème onglet de résultat. Chaque carré de ce graphe correspond à un régulateur, et chaque couleur donne le regroupement des régulateurs fait en amont de l'inférence sur la base de leur corrélation (valeur mentionnée sur les arêtes).
+5. Observer les groupes de régulateurs via le 2ème onglet de résultat. Chaque carré de ce graphe correspond à un régulateur, et chaque couleur donne le regroupement des régulateurs fait en amont de l'inférence sur la base de leur corrélation (valeur mentionnée sur les arêtes).
 
-> Les regulateurs ont-ils tous une expression très corrélée à l'intérieur d'un groupe ?
+>Les regulateurs ont-ils tous une expression très corrélée à l'intérieur d'un groupe ?
 
-7. 
->Les distributions des degrés (indiquées dans le 3ème onglet) vous semblent-elles conformes aux attentes pour un réseau de régulation ? 
+6. Observer les distributions des degrés (indiquées dans le 3ème onglet).
 
-8. Observer l'expression dans les modules (4ème onglet). 
+>Les distributions vous semblent-elles conformes aux attentes pour un réseau de régulation ? 
+
+7. Observer l'expression dans les modules (4ème onglet). 
+
 >Comment interprétez-vous le profil d'expression du module 10 ? 
 
-9. Noter que le 5ème onglet permet de mener des analyses d'enrichissement sur le réseau final, au sein des communatés détectées via l'algorithme de Louvain. 
+8. Noter que le 5ème onglet permet de mener des analyses d'enrichissement sur le réseau final, au sein des communatés détectées via l'algorithme de Louvain. 
 
 
 

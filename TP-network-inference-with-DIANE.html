@@ -23,7 +23,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -171,7 +170,7 @@ a.sourceLine {
 <ol style="list-style-type: decimal">
 <li><p>Dans ce TP, nous vous proposons d’utiliser le jeu de données RNA-seq disponible dans DIANE <code>Demo Arabidopsis Data</code>. Ces données issues d’une publication récente <span class="citation">[1]</span> décrivent les effets combinatoires des stress salin (S), osmotique (M), et chaleur (H fort Heat) chez la plante <em>Arabidopsis thaliana</em>.</p></li>
 <li><p>Cliquer sur set seed et fixer la graine à la valeur 60. Ceci permet de fixer l’aléa et de retrouver les mêmes résultats que ceux que nous présenterons dans ce TP.</p></li>
-<li><p>Une visualisation des données est proposée dans la colonne centrale.</p></li>
+<li><p>Une visualisation en heatmap d’une centaine de gènes des données est proposée dans la colonne centrale comme premier aperçu.</p></li>
 <li><p>Le plan d’expérience est indiqué dans la colonne de droite. Chaque condition est observée 3 fois. En déduire le nombre total de répétitions (noté <span class="math inline">\(n\)</span> dans le cours).</p></li>
 </ol>
 <p><strong>(Optionnel) Nouveau jeu de données d’expression</strong></p>
@@ -191,7 +190,7 @@ a.sourceLine {
 <li><p><strong>TCC</strong> <span class="citation">[2]</span> : réalise d’abord une normalisation avec l’une des deux méthodes précédantes, une analyse expression différentielle, retire les gènes différentiellement exprimés, puis calcule des facteurs de normalisation finaux (affranchis d’un potentiel biais lié aux gènes différentiellement exprimés en grand nombre)</p></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>Retirer de l’analyse les gènes dont le niveau d’expression trop faible (section <code>Low counts filtering</code>, par défaut 10 x 24 conditions, cliquer sur <code>FILTER</code>).</li>
+<li>Retirer de l’analyse les gènes dont le niveau d’expression trop faible (section <code>Low counts filtering</code>, par défaut 10 x 24 conditions, cliquer sur <code>FILTER</code>). Observer sur les boxplots les différences de distribution des valeurs d’expression avant et après ce retrait de gènes.</li>
 </ol>
 </div>
 <div id="exploratory-analysis" class="section level2">
@@ -274,9 +273,9 @@ a.sourceLine {
 <p>Choisir <code>Node impurity</code>.</p>
 <ol start="6" style="list-style-type: decimal">
 <li><p>Lancer l’inférence du réseau (<code>LAUNCH NETWORK INFERENCE</code>) et patienter quelques instants.</p></li>
-<li><p>Il s’agit ensuite de choisir le nombre d’arêtes à retenir dans le réseau puis cliquer sur <code>THRESHOLD NETWORK</code>. Ce nombre est toujours difficile à fixer. Dans DIANE, on propose de le choisir en fonction de la densité attendue du réseau (0.02 par défaut). Testez avec plusieurs valeurs de densité différentes grâce au slider <code>Network connectivity density</code> suivi d’un click sur <code>THRESHOLD NETWORK</code>, et observez l’influence de ce paramètre sur le réseau. Le nombre d’arêtes sélectionnées dans le réseau apparaît en haut à droite. Sélectionnez au final une densité de 0.03 pour la suite de la séance.</p></li>
+<li><p>Il s’agit ensuite de choisir le nombre d’arêtes à retenir dans le réseau puis cliquer sur <code>THRESHOLD NETWORK</code>. Ce nombre est toujours difficile à fixer. Dans DIANE, on propose de le choisir en fonction de la densité attendue du réseau (0.02 par défaut). Testez avec plusieurs valeurs de densité différentes grâce au slider <code>Network connectivity density</code> suivi d’un click sur <code>THRESHOLD NETWORK</code>, et observez l’influence de ce paramètre sur le réseau. Sélectionnez au final une densité de 0.03 pour la suite de la séance.</p></li>
 </ol>
-<p><em>Note : Dans ce TP, nous n’allons pas utiliser la fonctionalité de tests statistiques des arêtes inférées pour des raisons de temps de calcul, mais nous recommandons de l’utiliser pour des résultats plus robustes et précis.</em></p>
+<p><em>Note : Dans ce TP, nous n’allons pas utiliser la fonctionalité de tests statistiques des arêtes inférées pour des raisons de temps de calcul, mais nous recommandons de l’utiliser pour des résultats plus robustes et précis en vue de publier ou d’alimenter des interprétations biologiques.</em></p>
 <ol start="8" style="list-style-type: decimal">
 <li>Générer un <code>HTML REPORT</code>, l’enregistrer, et ouvrir le fichier html dans un explorateur.</li>
 </ol>
@@ -298,41 +297,47 @@ a.sourceLine {
 <p>Les gènes sont-ils tous présents dans le réseau inféré ?</p>
 </blockquote>
 <blockquote>
-<ol start="3" style="list-style-type: decimal">
-<li>Dans quel ordre sont classés les gènes dans le tableau ?</li>
-</ol>
+<p>Dans quel ordre sont classés les gènes dans le tableau ?</p>
 </blockquote>
-<ol start="4" style="list-style-type: decimal">
+<ol start="3" style="list-style-type: decimal">
 <li>En cliquant sur un gène (nœud) du réseau, un pop-up apparaît et donne l’annotation du gène, son profil d’expression, ses régulateurs et ses cibles.</li>
 </ol>
 <p>Vous pouvez choisir de regarder plus particulièrement certains gènes sur la base de leur identifiant grâce au champs <code>Gene ID to focus on</code> en haut à gauche du réseau, par exemples :</p>
 <ul>
 <li><p>Le gène ayant le degré le plus élevé dans le réseau (faire un copier/coller du nom du premier gène indiqué dans la première colonne du tableau).</p></li>
-<li><p>Les gènes observés dans la question de la section 3.2 :</p></li>
-<li><p>mean_AT4G01720-AT5G46350</p></li>
-<li><p>un gène qui contient “osmotic” ou “heat” dans sa description (ils peuvent être fitrés dans le tableau des gènes avec l’option <code>Search</code> en haut à droite).</p></li>
+<li><p>Les gènes observés dans la question de la section 3.2</p></li>
+<li><p>Le groupe de régulateurs mean_AT4G01720-AT5G46350</p></li>
+<li><p>Un gène qui contient “osmotic” ou “heat” dans sa description (ils peuvent être fitrés dans le tableau des gènes avec l’option <code>Search</code> en haut à droite).</p></li>
 </ul>
 <blockquote>
 <p>Les gènes observés dans la question de la section 3.2 font-ils tous partie du réseau inféré ?</p>
 </blockquote>
-<ol start="5" style="list-style-type: decimal">
+<ol start="4" style="list-style-type: decimal">
 <li>En cliquant sur <code>DOWNLOAD EDGES AS CSV TABLE</code>, télécharger la liste des arêtes du réseau. Ouvrir le fichier dans un tableau (calc, excel, …) et visualiser le contenu.</li>
 </ol>
 <blockquote>
 <p>Comment ce tableau est-il organisé ?</p>
 </blockquote>
-<ol start="6" style="list-style-type: decimal">
+<ol start="5" style="list-style-type: decimal">
 <li>Observer les groupes de régulateurs via le 2ème onglet de résultat. Chaque carré de ce graphe correspond à un régulateur, et chaque couleur donne le regroupement des régulateurs fait en amont de l’inférence sur la base de leur corrélation (valeur mentionnée sur les arêtes).</li>
 </ol>
 <blockquote>
 <p>Les regulateurs ont-ils tous une expression très corrélée à l’intérieur d’un groupe ?</p>
 </blockquote>
+<ol start="6" style="list-style-type: decimal">
+<li>Observer les distributions des degrés (indiquées dans le 3ème onglet).</li>
+</ol>
+<blockquote>
+<p>Les distributions vous semblent-elles conformes aux attentes pour un réseau de régulation ?</p>
+</blockquote>
 <ol start="7" style="list-style-type: decimal">
-<li><blockquote>
-<p>Les distributions des degrés (indiquées dans le 3ème onglet) vous semblent-elles conformes aux attentes pour un réseau de régulation ?</p>
-</blockquote></li>
-<li><p>Observer l’expression dans les modules (4ème onglet). &gt;Comment interprétez-vous le profil d’expression du module 10 ?</p></li>
-<li><p>Noter que le 5ème onglet permet de mener des analyses d’enrichissement sur le réseau final, au sein des communatés détectées via l’algorithme de Louvain.</p></li>
+<li>Observer l’expression dans les modules (4ème onglet).</li>
+</ol>
+<blockquote>
+<p>Comment interprétez-vous le profil d’expression du module 10 ?</p>
+</blockquote>
+<ol start="8" style="list-style-type: decimal">
+<li>Noter que le 5ème onglet permet de mener des analyses d’enrichissement sur le réseau final, au sein des communatés détectées via l’algorithme de Louvain.</li>
 </ol>
 </div>
 <div id="antisèche" class="section level2">
